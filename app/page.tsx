@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
+    <div className="min-h-screen flex flex-col bg-gray-900 text-white">
       <header className="w-full px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center">
           {/* <Image src="/logo-02.svg" alt="Urban Biz Tech" width={120} height={72} className="h-8 w-auto" /> */}
