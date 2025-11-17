@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 type ColorBendsProps = {
   className?: string;
@@ -124,7 +124,7 @@ export default function ColorBends({
   warpStrength = 1,
   mouseInfluence = 1,
   parallax = 0.5,
-  noise = 0.1
+  noise = 0.1,
 }: ColorBendsProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -143,7 +143,10 @@ export default function ColorBends({
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
     const geometry = new THREE.PlaneGeometry(2, 2);
-    const uColorsArray = Array.from({ length: MAX_COLORS }, () => new THREE.Vector3(0, 0, 0));
+    const uColorsArray = Array.from(
+      { length: MAX_COLORS },
+      () => new THREE.Vector3(0, 0, 0)
+    );
     const material = new THREE.ShaderMaterial({
       vertexShader: vert,
       fragmentShader: frag,
@@ -161,10 +164,10 @@ export default function ColorBends({
         uPointer: { value: new THREE.Vector2(0, 0) },
         uMouseInfluence: { value: mouseInfluence },
         uParallax: { value: parallax },
-        uNoise: { value: noise }
+        uNoise: { value: noise },
       },
       premultipliedAlpha: true,
-      transparent: true
+      transparent: true,
     });
     materialRef.current = material;
 
@@ -173,16 +176,16 @@ export default function ColorBends({
 
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
-      powerPreference: 'high-performance',
-      alpha: true
+      powerPreference: "high-performance",
+      alpha: true,
     });
     rendererRef.current = renderer;
     (renderer as any).outputColorSpace = (THREE as any).SRGBColorSpace;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setClearColor(0x000000, transparent ? 0 : 1);
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.display = "block";
     container.appendChild(renderer.domElement);
 
     const clock = new THREE.Clock();
@@ -196,12 +199,12 @@ export default function ColorBends({
 
     handleResize();
 
-    if ('ResizeObserver' in window) {
+    if ("ResizeObserver" in window) {
       const ro = new ResizeObserver(handleResize);
       ro.observe(container);
       resizeObserverRef.current = ro;
     } else {
-      (window as Window).addEventListener('resize', handleResize);
+      (window as Window).addEventListener("resize", handleResize);
     }
 
     const loop = () => {
@@ -228,11 +231,14 @@ export default function ColorBends({
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       if (resizeObserverRef.current) resizeObserverRef.current.disconnect();
-      else (window as Window).removeEventListener('resize', handleResize);
+      else (window as Window).removeEventListener("resize", handleResize);
       geometry.dispose();
       material.dispose();
       renderer.dispose();
-      if (renderer.domElement && renderer.domElement.parentElement === container) {
+      if (
+        renderer.domElement &&
+        renderer.domElement.parentElement === container
+      ) {
         container.removeChild(renderer.domElement);
       }
     };
@@ -254,11 +260,19 @@ export default function ColorBends({
     material.uniforms.uNoise.value = noise;
 
     const toVec3 = (hex: string) => {
-      const h = hex.replace('#', '').trim();
+      const h = hex.replace("#", "").trim();
       const v =
         h.length === 3
-          ? [parseInt(h[0] + h[0], 16), parseInt(h[1] + h[1], 16), parseInt(h[2] + h[2], 16)]
-          : [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+          ? [
+              parseInt(h[0] + h[0], 16),
+              parseInt(h[1] + h[1], 16),
+              parseInt(h[2] + h[2], 16),
+            ]
+          : [
+              parseInt(h.slice(0, 2), 16),
+              parseInt(h.slice(2, 4), 16),
+              parseInt(h.slice(4, 6), 16),
+            ];
       return new THREE.Vector3(v[0] / 255, v[1] / 255, v[2] / 255);
     };
 
@@ -283,26 +297,38 @@ export default function ColorBends({
     parallax,
     noise,
     colors,
-    transparent
+    transparent,
   ]);
 
   useEffect(() => {
+    // Listen for pointer events on the window so the background shader
+    // receives pointer coordinates even when it is behind other DOM layers
+    // (e.g. foreground content with a higher z-index). Using the container
+    // element directly fails when the container is covered and doesn't
+    // receive pointer events.
     const material = materialRef.current;
-    const container = containerRef.current;
-    if (!material || !container) return;
+    if (!material) return;
 
     const handlePointerMove = (e: PointerEvent) => {
+      const container = containerRef.current;
+      if (!container) return;
       const rect = container.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
       const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
       pointerTargetRef.current.set(x, y);
     };
 
-    container.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener("pointermove", handlePointerMove);
     return () => {
-      container.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener("pointermove", handlePointerMove);
     };
   }, []);
 
-  return <div ref={containerRef} className={`w-full h-full relative overflow-hidden ${className}`} style={style} />;
+  return (
+    <div
+      ref={containerRef}
+      className={`w-full h-full relative overflow-hidden ${className}`}
+      style={style}
+    />
+  );
 }
