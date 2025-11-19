@@ -20,7 +20,7 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
     { id: 1, title: "Healthcare", src: "/projects/health-care.png" },
     { id: 2, title: "Financial services", src: "/projects/finance.png" },
     { id: 3, title: "Technology", src: "/projects/technology.png" },
-    { id: 4, title: "Manufacturing", src: "/projects/manufacturing.png" },
+    { id: 4, title: "Manufacturing", src: "/projects/Manufacturing-v1.jpg" },
     { id: 5, title: "Logistics", src: "/projects/logistics.png" },
     { id: 6, title: "E-commerce", src: "/projects/ecom.jpg" },
   ];
