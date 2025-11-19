@@ -3,22 +3,38 @@
 import Image from "next/image";
 
 export default function TrustedClients() {
-  // Using your file from /public/client/demo.svg
+  // Logo data with URLs
   const logos = [
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-    "/client/logo-white.svg",
-   
+    {
+      src: "/client/bearys.png",
+      url: "https://bearysstartup.com",
+      alt: "Bearys",
+    },
+    {
+      src: "/client/BM_Green_Logo_house.png",
+      url: "https://bmgreenhouse.in/", // Update with actual URL
+      alt: "BM Green",
+    },
+    {
+      src: "/client/Essenzia Logo-01.png",
+      url: "https://essenziaglobal.com/", // Update with actual URL
+      alt: "Essenzia",
+    },
+    {
+      src: "/client/bizmine.png",
+      url: "https://bizmine.in/", // Update with actual URL
+      alt: "Bizmine",
+    },
+    {
+      src: "/client/bcc-v1.png",
+      url: "https://www.bccbengaluru.com/", // Update with actual URL
+      alt: "BCC",
+    },
+    {
+      src: "/client/Mangalore_muttons.png",
+      url: "https://mangaloremuttons.zobaze.shop/home", // Update with actual URL
+      alt: "Mangalore Muttons",
+    },
   ];
 
   // Duplicate for continuous scrolling effect
@@ -28,25 +44,28 @@ export default function TrustedClients() {
     <section className="py-16 bg-black overflow-hidden">
       <div className="container mx-auto px-6">
         <p className="text-center text-gray-400 mb-8 text-sm md:text-base tracking-wide">
-          Trusted by fast-moving B2B teams
+        Trusted by Leading Brands
         </p>
 
         <div className="relative w-full overflow-hidden">
           {/* Infinite scroll container */}
           <div className="flex animate-scroll gap-4 md:gap-4">
-            {repeatedLogos.map((src, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-50 h-50 md:w-50 md:h-50 bg-[#DB0000]/10  rounded-2xl flex items-center justify-center shadow-inner"
+            {repeatedLogos.map((logo, i) => (
+              <a
+                key={`${logo.src}-${i}`}
+                href={logo.url}
+                target={logo.url !== "#" ? "_blank" : undefined}
+                rel={logo.url !== "#" ? "noopener noreferrer" : undefined}
+                className="flex-shrink-0 w-50 h-50 md:w-50 md:h-50 bg-[#DB0000]/10 rounded-2xl flex items-center justify-center shadow-inner cursor-pointer hover:bg-[#DB0000]/20 transition-all duration-300"
               >
                 <Image
-                  src={src}
-                  alt={`Client logo ${i + 1}`}
+                  src={logo.src}
+                  alt={logo.alt}
                   width={100}
                   height={100}
                   className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
                 />
-              </div>
+              </a>
             ))}
           </div>
 

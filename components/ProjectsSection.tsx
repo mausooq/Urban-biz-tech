@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
 import InertiaPlugin from "gsap/InertiaPlugin";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -41,8 +41,8 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
   const [atEnd, setAtEnd] = useState(false);
 
   const updateButtonState = (x: number, maxX: number) => {
-    setAtStart(x >= 0);           // at FIRST card
-    setAtEnd(x <= maxX + 5);      // at LAST card
+    setAtStart(x >= 0); // at FIRST card
+    setAtEnd(x <= maxX + 5); // at LAST card
   };
 
   // ----------------------------------
@@ -90,8 +90,7 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
     if (!draggable || !wrapper) return;
 
     const cardWidth = 400 + 24;
-    const maxX =
-      -(cardWidth * defaultItems.length - wrapper.offsetWidth);
+    const maxX = -(cardWidth * defaultItems.length - wrapper.offsetWidth);
 
     const currentX = draggable.x;
 
@@ -117,8 +116,9 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
     <section className="py-12 bg-black">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#c18383] ms-16">
-            Powering progress across industries <br /> through innovations
+          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] tracking-tight ms-16">
+            Transforming industries <br />
+            <span className="text-gray-600">with next-gen innovation</span>
           </h2>
 
           <div className="flex gap-3 me-10">
@@ -127,7 +127,11 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
               disabled={atStart}
               onClick={() => scrollBy("left")}
               className={`w-12 h-12 rounded-lg text-gray-200 flex items-center justify-center transition-all duration-300 
-                ${atStart ? "bg-[#300000] opacity-40 cursor-not-allowed" : "bg-[#160000] hover:bg-[#621010]"}`}
+                ${
+                  atStart
+                    ? "bg-[#300000] opacity-40 cursor-not-allowed"
+                    : "bg-[#160000] hover:bg-[#621010]"
+                }`}
             >
               <Image src="/icons/left.svg" width={25} height={25} alt="left" />
             </button>
@@ -137,14 +141,27 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
               disabled={atEnd}
               onClick={() => scrollBy("right")}
               className={`w-12 h-12 rounded-lg text-gray-200 flex items-center justify-center transition-all duration-300 
-                ${atEnd ? "bg-[#300000] opacity-40 cursor-not-allowed" : "bg-[#160000] hover:bg-[#621010]"}`}
+                ${
+                  atEnd
+                    ? "bg-[#300000] opacity-40 cursor-not-allowed"
+                    : "bg-[#160000] hover:bg-[#621010]"
+                }`}
             >
-              <Image src="/icons/right.svg" width={25} height={25} alt="right" />
+              <Image
+                src="/icons/right.svg"
+                width={25}
+                height={25}
+                alt="right"
+              />
             </button>
           </div>
         </div>
 
-        <div ref={wrapperRef} className="relative w-full overflow-hidden" style={{ height: "420px" }}>
+        <div
+          ref={wrapperRef}
+          className="relative w-full overflow-hidden"
+          style={{ height: "420px" }}
+        >
           <div
             ref={containerRef}
             className="absolute top-0 left-0 flex gap-6"
@@ -155,7 +172,12 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
                 key={it.id}
                 className="w-[400px] h-[400px] rounded-3xl overflow-hidden bg-gray-900 relative shadow-lg shrink-0"
               >
-                <Image src={it.src!} alt={it.title} fill className="object-cover" />
+                <Image
+                  src={it.src!}
+                  alt={it.title}
+                  fill
+                  className="object-cover"
+                />
 
                 <div className="absolute inset-0 bg-black/20" />
 

@@ -206,7 +206,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       }}
     >
       <span
-        className="absolute block origin-top-right rotate-45 bg-border"
+        className="absolute block origin-top-right rotate-45 bg-[#CE2029]"
         style={{
           right: -2,
           top: 48,
