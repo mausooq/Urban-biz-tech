@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -278,12 +279,25 @@ export const StaggerTestimonials: React.FC = () => {
   return (
     <div className="relative w-full overflow-hidden bg-black py-16">
       {/* ======= TITLE SECTION ======= */}
-      <h2 className="text-center text-[#fff5f5] text-3xl md:text-4xl font-semibold mb-12 px-4">
+      <motion.h2
+        className="text-center text-[#fff5f5] text-3xl md:text-4xl font-semibold mb-12 px-4"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
         What our customers say about their experience with COMPANY
-      </h2>
+      </motion.h2>
 
       {/* ======= TESTIMONIAL CARDS SECTION ======= */}
-      <div style={{ height: 600 }} className="relative w-full overflow-hidden">
+      <motion.div
+        style={{ height: 600 }}
+        className="relative w-full overflow-hidden"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
         {testimonialsList.map((testimonial, index) => {
           const position =
             testimonialsList.length % 2
@@ -299,7 +313,7 @@ export const StaggerTestimonials: React.FC = () => {
             />
           );
         })}
-      </div>
+      </motion.div>
 
       {/* ======= BUTTONS ======= */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-4">

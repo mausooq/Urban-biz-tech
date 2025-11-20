@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function TrustedClients() {
@@ -43,11 +44,23 @@ export default function TrustedClients() {
   return (
     <section className="py-16 bg-black overflow-hidden">
       <div className="container mx-auto px-6">
-        <p className="text-center text-gray-400 mb-8 text-sm md:text-base tracking-wide">
-        Trusted by Leading Brands
-        </p>
+        <motion.p
+          className="text-center text-gray-400 mb-8 text-sm md:text-base tracking-wide"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          Trusted by Leading Brands
+        </motion.p>
 
-        <div className="relative w-full overflow-hidden">
+        <motion.div
+          className="relative w-full overflow-hidden"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           {/* Infinite scroll container */}
           <div className="flex animate-scroll gap-4 md:gap-4">
             {repeatedLogos.map((logo, i) => (
@@ -72,7 +85,7 @@ export default function TrustedClients() {
           {/* Fade edges for clean look */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-64 bg-gradient-to-r from-black to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-64 bg-gradient-to-l from-black to-transparent" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

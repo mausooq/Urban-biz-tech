@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import Draggable from "gsap/Draggable";
 import InertiaPlugin from "gsap/InertiaPlugin";
@@ -62,9 +63,11 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
       bounds: { minX: maxX, maxX: 0 },
       inertia: true,
       liveSnap: false,
-      edgeResistance: 0.25,
-
-      snap: (value) => Math.round(value / cardWidth) * cardWidth,
+      edgeResistance: 0.3,
+      throwResistance: 2000,
+      snap: {
+        x: (value) => Math.round(value / cardWidth) * cardWidth,
+      },
 
       onDrag() {
         gsap.set(container, { x: this.x });
@@ -102,8 +105,8 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
 
     gsap.to(draggable.target, {
       x: newX,
-      duration: 0.6,
-      ease: "power3.out",
+      duration: 0.8,
+      ease: "power2.inOut",
       onUpdate: () => draggable.update(),
       onComplete: () => updateButtonState(newX, maxX),
     });
@@ -115,7 +118,13 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
   return (
     <section className="py-12 bg-black">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between mb-16">
+        <motion.div
+          className="flex items-center justify-between mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] tracking-tight ms-16">
             Transforming industries <br />
             <span className="text-gray-600">with next-gen innovation</span>
@@ -155,12 +164,16 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
               />
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        <div
+        <motion.div
           ref={wrapperRef}
           className="relative w-full overflow-hidden"
           style={{ height: "420px" }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div
             ref={containerRef}
@@ -187,7 +200,7 @@ export default function ProjectsSection({ items }: { items?: ProjectItem[] }) {
               </article>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

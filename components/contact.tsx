@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
@@ -70,12 +71,40 @@ export default function ContactSection() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
   return (
     <section id="contact" className="w-full bg-black py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {/* Left Section - Contact Form */}
-          <div className="w-full">
+          <motion.div className="w-full" variants={itemVariants}>
             <div className="mb-8">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                 Need a hand?
@@ -192,10 +221,13 @@ export default function ContactSection() {
                 {isSubmitting ? "Submitting..." : "Get a free consultation"}
               </button>
             </form>
-          </div>
+          </motion.div>
 
           {/* Right Section - Contact Info with Map Background */}
-          <div className="relative w-full min-h-[600px] rounded-2xl overflow-hidden  ">
+          <motion.div
+            className="relative w-full min-h-[600px] rounded-2xl overflow-hidden"
+            variants={itemVariants}
+          >
             {/* World Map Background */}
             <div className="absolute inset-0 opacity-50">
               <Image
@@ -241,8 +273,8 @@ export default function ContactSection() {
                 <span>View on Google map</span>
               </a>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
