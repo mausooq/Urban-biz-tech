@@ -1,8 +1,30 @@
 "use client";
 
-import Link from "next/link";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import ColorBends from "./ColorBends";
+
+const heroVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
 
 export default function HeroSection() {
   return (
@@ -25,41 +47,40 @@ export default function HeroSection() {
       </div>
 
       {/* Foreground Content */}
-      <div className="relative z-10 container px-6 md:px-10 h-full grid items-center">
+      <motion.div
+        className="relative z-10 container px-6 md:px-10 h-full grid items-center"
+        variants={heroVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="grid gap-10 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_600px] lg:gap-16">
           {/* Left Text Section */}
-          <div className="flex flex-col justify-center space-y-6">
-            <div className="space-y-4">
-             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug">
-  Empowering <span className="text-[#FFB900]">Businesses</span> with{" "}
-  <span className="text-gray-300">Smart Digital Solutions</span>
-</h1>
+          <motion.div
+            className="flex flex-col justify-center space-y-6"
+            variants={heroItemVariants}
+          >
+            <div className="flex flex-col justify-center space-y-6">
+              <div className="space-y-4">
+                {/* Updated Title */}
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug">
+                  <span className="text-gray-200">Smart Digital Solutions</span>{" "}
+                  <span className="text-[#FFB900]">for Modern Businesses</span>
+                </h1>
 
-              <p className="max-w-[600px] text-gray-300 text-lg md:text-xl leading-relaxed my-10">
-                We help startups and enterprises thrive in the digital era with
-                next-gen tech, automation, and strategic design.
-              </p>
+                {/* Updated Subtitle */}
+                <p className="max-w-[600px] text-gray-300 text-lg md:text-xl leading-relaxed my-10">
+                  We help companies grow with simple, effective, and scalable
+                  digital strategies.
+                </p>
+              </div>
             </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="#"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-[#FFB900] px-8 text-sm font-semibold text-black shadow-lg transition-all hover:scale-105 hover:bg-neutral-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
-              >
-                Our Work
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-gray-600 bg-transparent px-8 text-sm font-semibold text-gray-200 transition-all hover:bg-gray-900 hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700"
-              >
-                Join Us
-              </Link>
-            </div>
-          </div>
+          </motion.div>
 
           {/* Right Image Section */}
-          <div className="flex items-center justify-center relative">
+          <motion.div
+            className="flex items-center justify-center relative"
+            variants={heroItemVariants}
+          >
             {/* Glowing Red Background */}
             <div className="absolute inset-0 blur-3xl bg-[#FF1A1A]/30 rounded-full animate-pulse" />
             <Image
@@ -69,12 +90,11 @@ export default function HeroSection() {
               width={550}
               src="/hero-image.png"
             />
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
       {/* 🔹 Bottom gradient shadow */}
-<div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-[#060010]/70 to-transparent pointer-events-none" />
-
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-[#060010]/70 to-transparent pointer-events-none" />
     </section>
   );
 }
